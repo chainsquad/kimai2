@@ -13,6 +13,7 @@ RUN apt update && \
         libldap2-dev \
         libldb-dev \
         libpng-dev \
+        libxslt1-dev \
         mysql-client \
         unzip \
         wget \
@@ -26,6 +27,7 @@ RUN apt update && \
     rm composer-setup.php && \
     mv /var/www/html/composer.phar /usr/bin/composer && \
     docker-php-ext-install \
+        xsl \
         gd \
         intl \
         ldap \
@@ -34,7 +36,8 @@ RUN apt update && \
     apt remove -y wget && \
     apt -y autoremove && \
     apt clean && \
-    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
+    cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini && \
+    echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 
 FROM tmp_kimai2_base
 
